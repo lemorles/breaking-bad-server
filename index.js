@@ -9,4 +9,8 @@ app.get("/", (request, response) => {
   });
 });
 
+app.get("/characters", (request, response) => {
+  response.json(characters);
+});
+
 app.listen(3000, () => console.log("server listening on port 3000"));
