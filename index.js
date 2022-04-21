@@ -23,7 +23,7 @@ app.get("/characters/:id", (request, response) => {
     return response.json(found);
   }
 
-  response.json({ msg: "Character not found" });
+  response.status(404).json({ msg: "Character not found" });
 });
 
 app.listen(3000, () => console.log("server listening on port 3000"));
