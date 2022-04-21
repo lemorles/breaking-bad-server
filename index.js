@@ -10,7 +10,16 @@ app.get("/", (request, response) => {
 });
 
 app.get("/characters", (request, response) => {
-  response.json(characters);
+  const { status } = request.query;
+  if (!status) return response.json(characters);
+  else {
+    const filterChar = characters.filter(
+      (c) => c.status.toLowerCase() === status.toLowerCase()
+    );
+    if (filterChar.length) return response.send(filterChar);
+
+    response.status(404).send({ msg: "Character not foud" });
+  }
 });
 
 app.get("/characters/:id", (request, response) => {
