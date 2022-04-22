@@ -47,4 +47,22 @@ app.get("/characters/:id", (request, response) => {
   response.status(404).json({ msg: "Character not found" });
 });
 
+app.post("/characters", (req, res) => {
+  const { name, birthday, status } = req.body;
+
+  if (!name || !birthday || !status)
+    return res.status(400).json({ msg: "bad request" });
+
+  const char = {
+    char_id: ++char_id,
+    name,
+    birthday,
+    status,
+  };
+
+  characters.push(char);
+
+  res.status(201).json({ msg: "Character created" });
+});
+
 app.listen(3000, () => console.log("server listening on port 3000"));
