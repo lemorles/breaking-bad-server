@@ -14,7 +14,7 @@ const myMiddleware = (req, res, next) => {
   next();
 };
 
-app.get("/", (request, response) => {
+app.get("/", myMiddleware, (request, response) => {
   response.send({
     status: 200,
     msg: "Bienvenidos a la API REST de Breaking Bad",
