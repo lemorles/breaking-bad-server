@@ -4,6 +4,15 @@ const morgan = require("morgan");
 const characters = require("./db");
 
 app.use(morgan("dev"));
+app.use(express.json());
+
+const myMiddleware = (req, res, next) => {
+  const { access } = req.body;
+
+  if (access < 5) return res.status(401).json({ msg: "Error, access denied" });
+
+  next();
+};
 
 app.get("/", (request, response) => {
   response.send({
