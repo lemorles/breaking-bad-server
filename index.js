@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
 const characters = require("./db");
+
+app.use(morgan("dev"));
 
 app.get("/", (request, response) => {
   response.send({
