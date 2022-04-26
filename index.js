@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const characters = require("./db");
+let characters = require("./db");
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -63,6 +63,30 @@ app.post("/characters", (req, res) => {
   characters.push(char);
 
   res.status(201).json({ msg: "Character created" });
+});
+
+app.put("/characters/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, birthday, status } = req.body;
+
+  const found = characters.find((c) => c.char_id === parseInt(id));
+
+  if (!found) return res.status(404).json({ msg: "Character not found" });
+
+  found.name = name;
+  found.birthday = birthday;
+  found.status = status;
+
+  res.json({ msg: "Character edited" });
+});
+
+app.delete("/characters/:id", (req, res) => {
+  const { id } = req.params;
+
+  const filterCharacters = characters.filter((c) => c.char_id !== parseInt(id));
+  characters = [...filterCharacters];
+
+  res.json({ msg: "Character deleted" });
 });
 
 app.listen(3000, () => console.log("server listening on port 3000"));
